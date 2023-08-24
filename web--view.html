@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electric Current Monitor</title>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+<h1>Electric Current Monitor</h1>
+<div id="chart"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const chartContainer = document.getElementById("chart");
+  let chart;
+
+  function fetchData() {
+    fetch("http://192.168.0.1/api")
+      .then(response => response.json())
+      .then(data => {
+        const current = parseFloat(data.current);
+        const time = new Date().getTime();
+        updateChart(time, current);
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }
+
+  function updateChart(time, current) {
+    chart.series[0].addPoint([time, current], true, true);
+  }
+
+  chart = Highcharts.chart(chartContainer, {
+    chart: {
+      type: "spline",
+      events: {
+        load: function () {
+          setInterval(fetchData, 5000); // Fetch data every 5 seconds
+        }
+      }
+    },
+    title: {
+      text: "Electric Current vs. Time"
+    },
+    xAxis: {
+      type: "datetime",
+      title: {
+        text: "Time"
+      }
+    },
+    yAxis: {
+      title: {
+        text: "Current (A)"
+      },
+      min: 0,
+      max: 0.001
+    },
+    series: [{
+      name: "Electric Current",
+      data: []
+    }]
+  });
+
+  fetchData(); // Fetch initial data
+});
+</script>
+</body>
+</html>
