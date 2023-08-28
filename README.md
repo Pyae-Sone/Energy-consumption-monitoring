@@ -40,7 +40,7 @@ The energy consumption monitoring system consists of two main components:
 
 ## Project Images
 
-![Image 1](dummy_image_link_1.jpg)
+![Image 1](Images/IMG20230828120349.jpg)
 ![Image 2](dummy_image_link_2.jpg)
 
 ## Resources
