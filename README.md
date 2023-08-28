@@ -1,6 +1,8 @@
 # Energy Consumption Monitoring System with ESP8266 and STC013 Sensor
 
 ![Project Image](https://imgur.com/a/5WadV3i)
+![Image Project](Images/IMG20230828123203.jpg)
+
 -[Project-Gif](https://imgur.com/a/5WadV3i)
 
 
