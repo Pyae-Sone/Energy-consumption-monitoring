@@ -49,9 +49,3 @@ The energy consumption monitoring system consists of two main components:
 - [STC013 Sensor Datasheet](link_to_stc013_datasheet.pdf)
 
 Feel free to contribute to the project by adding improvements, features, or optimizations!
-
-[License](LICENSE)
-
-
-
-[License](LICENSE)
