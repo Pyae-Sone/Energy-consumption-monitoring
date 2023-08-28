@@ -1,10 +1,14 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
+#include <LiquidCrystal_I2C.h>
 
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+float PubelectricCurrent;
 const char* apSSID = "MyESP8266AP";
 const char* apPassword = "1234";
-const IPAddress apIP(192, 168, 10, 1);
+const IPAddress apIP(192, 168, 0, 1);
 
 const int currentPin = A0;
 
@@ -13,13 +17,24 @@ ESP8266WebServer server(80);
 void setup() {
   Serial.begin(115200);
 
+  lcd.init();
+  lcd.clear();
+  lcd.backlight();
+
   pinMode(currentPin, INPUT);
 
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(apSSID, apPassword);
 
-  Serial.print("AP IP address: ");
+  /*Serial.print("AP IP address: ");
   Serial.println(WiFi.softAPIP());
+  */
+  lcd.setCursor(0, 0);
+  lcd.print("IP: ");
+  lcd.print(WiFi.softAPIP());
+  
+  
+
 
   // Enable CORS headers
   server.onNotFound([]() {
@@ -35,7 +50,7 @@ void setup() {
 
   server.on("/api", HTTP_GET, [](){
     float electricCurrent = analogRead(currentPin) * 0.0049;
-
+    PubelectricCurrent = electricCurrent;
     // Create a JSON object to hold the electric current value
     StaticJsonDocument<64> jsonDocument;
     jsonDocument["current"] = electricCurrent;
@@ -47,6 +62,7 @@ void setup() {
     // Set CORS headers for the API response
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "application/json", jsonString);
+  
   });
 
   server.on("/", HTTP_GET, [](){
@@ -58,4 +74,8 @@ void setup() {
 
 void loop() {
   server.handleClient();
+  lcd.setCursor(0, 1);
+  lcd.print("Current:");
+  lcd.print(PubelectricCurrent, 4);
+  lcd.print(" A");
 }
