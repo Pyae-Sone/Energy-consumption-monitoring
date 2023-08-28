@@ -1,6 +1,6 @@
 # Energy Consumption Monitoring System with ESP8266 and STC013 Sensor
 
-![Project Image](link_to_project_image_placeholder.jpg)
+![Project Image](https://drive.google.com/file/d/1CLtMbueUqKBi9eTcHQbCTTmjLcyDsdHu/view?usp=sharing)
 
 This project involves creating an energy consumption monitoring system using an ESP8266 microcontroller and an STC013 sensor. The system collects data about electric current consumption and presents it on a website in real-time using an up and down chart. Additionally, the system displays the electric current on an LED board.
 
